@@ -61,7 +61,6 @@ namespace primerAppPokemon
                     aux.Descripcion = (string)lector["Descripcion"];
 
                     lista.Add(aux);
-
                     //En cada vuelta va a ir creando una nueva instancia y guardando en la lista
                 }
 
