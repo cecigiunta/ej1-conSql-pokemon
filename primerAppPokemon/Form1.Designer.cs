@@ -28,19 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dgvPokemons = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPokemons)).BeginInit();
             this.SuspendLayout();
+            // 
+            // dgvPokemons
+            // 
+            this.dgvPokemons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPokemons.Location = new System.Drawing.Point(12, 12);
+            this.dgvPokemons.Name = "dgvPokemons";
+            this.dgvPokemons.RowHeadersWidth = 49;
+            this.dgvPokemons.RowTemplate.Height = 28;
+            this.dgvPokemons.Size = new System.Drawing.Size(449, 369);
+            this.dgvPokemons.TabIndex = 0;
+            this.dgvPokemons.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPokemons_CellContentClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(547, 304);
+            this.ClientSize = new System.Drawing.Size(562, 393);
+            this.Controls.Add(this.dgvPokemons);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPokemons)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private DataGridView dgvPokemons;
     }
 }
