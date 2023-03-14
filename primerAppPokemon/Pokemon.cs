@@ -13,5 +13,10 @@ namespace primerAppPokemon
         public string Descripcion { get; set; }
 
         public string UrlImagen { get; set; }
+
+        //Creo la nueva propiedad que va a ser el Tipo (es de tipo Elemento, la clase q cree)
+        public Elemento Tipo { get; set; }
+
+        public Elemento Debilidad { get; set; }
     }
 }

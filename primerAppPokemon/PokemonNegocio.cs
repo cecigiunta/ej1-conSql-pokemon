@@ -41,9 +41,9 @@ namespace primerAppPokemon
                 //2. Tipo enlace directo con la tabla: no se usa
 
                 //3. Tipo texto : le inyectamos una sentencia sql -- usamos esa
-                // Es recomendable hacerla PRIMERO en el sql : Select Numero, Nombre, Descripcion from POKEMONS
+                // Es recomendable hacerla PRIMERO en el sql
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select Numero, Nombre, Descripcion, UrlImagen from POKEMONS";
+                comando.CommandText = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad";
 
                 comando.Connection = conexion;  //le digo al comando que esa sentencia la ejecute en la conexion que defini
 
@@ -59,17 +59,21 @@ namespace primerAppPokemon
                     aux.Numero = lector.GetInt32(0);  //Tengo que conocer qué tipo de dato es (int)
                     aux.Nombre = (string)lector["Nombre"];   //Le pongo el nombre de la columna. Es mas practico
                     aux.Descripcion = (string)lector["Descripcion"];
-
-                    //NUEVO agrego IMAGEN
                     aux.UrlImagen = (string)lector["UrlImagen"];
 
-                    lista.Add(aux);
-                    //En cada vuelta va a ir creando una nueva instancia y guardando en la lista
+                    //CARGAR TIPO Y DEBILIDAD
+                    aux.Tipo = new Elemento(); //para que no de referencia nula, porque viene sin instancia la 1 vez
+                    aux.Tipo.Descripcion = (string)lector["Tipo"];
+
+                    aux.Debilidad = new Elemento();
+                    aux.Debilidad.Descripcion = (string)lector["Debilidad"];
+
+                    lista.Add(aux);        //En cada vuelta va a ir creando una nueva instancia y guardando en la lista
                 }
 
-                conexion.Close(); //Cierro la conexion
-                //hacemos que la devuelva. Cuando no haya más, deja de leer y la devuelve
-                return lista;
+                conexion.Close();          //Cierro la conexion
+                
+                return lista;              //hacemos que la devuelva. Cuando no haya más, deja de leer y la devuelve
 
             }
             catch(Exception ex)
