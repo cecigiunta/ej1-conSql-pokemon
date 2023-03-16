@@ -1,4 +1,7 @@
-﻿namespace primerAppPokemon
+﻿using dominio;
+using negocios;
+
+namespace primerAppPokemon
 {
     partial class Form1
     {

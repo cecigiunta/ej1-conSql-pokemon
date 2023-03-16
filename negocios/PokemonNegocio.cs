@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 //Para hacer la conexion a la BD tengo que incluir una libreria:
 using System.Data.SqlClient;
+using dominio;
 
-namespace primerAppPokemon
+namespace negocios
 {
-    internal class PokemonNegocio
+    public class PokemonNegocio
     {
         //Creo el primer metodo, le digo qué devuelve (una lista de Pokemon)
         public List<Pokemon> listar()

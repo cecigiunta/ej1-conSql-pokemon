@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace primerAppPokemon
+namespace dominio
 {
     //luego de haber creado la consulta y cambiado la consulta en pokemon negocio
     //Creo la nueva clase Elemento
     //en pokemon.cs agrego la nueva propiedad tambien
-    internal class Elemento
+    public class Elemento
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }

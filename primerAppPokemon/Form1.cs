@@ -1,3 +1,6 @@
+using dominio;
+using negocios;
+
 namespace primerAppPokemon
 {
     public partial class Form1 : Form
