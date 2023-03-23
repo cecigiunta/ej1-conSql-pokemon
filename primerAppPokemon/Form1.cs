@@ -60,5 +60,14 @@ namespace primerAppPokemon
 
             }
         }
+
+
+        //AGREGAR UN POKEMON
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            //Llamo al otro formulario cuando se clickee el boton
+            frmAlta alta = new frmAlta();
+            alta.ShowDialog();
+        }
     }
 }

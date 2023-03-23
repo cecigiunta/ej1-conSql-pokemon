@@ -86,5 +86,32 @@ namespace negocios
 
 
         }
+
+
+        //METODO PARA INSERTAR
+        public void agregar(Pokemon nuevo)
+        {
+            //Creo un objeto de la clase de conexion a la BD
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                //Le seteo la consulta que quiero ejecutar
+                datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo)values("+ nuevo.Numero + ", '"+nuevo.Nombre+"', '"+nuevo.Descripcion+ "',1)");
+                datos.ejecutarAccion();
+            
+            
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        
     }
 }

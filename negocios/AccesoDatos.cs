@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+//agregar lo necesario p conectarse a sql
+using System.Data.SqlClient;
+
+namespace negocios
+{
+    public class AccesoDatos
+    {
+        //los objetos que necesito p establecer una conexion
+        private SqlConnection conexion;
+        private SqlCommand comando;
+        private SqlDataReader lector;
+
+        //creo la propertie para poder leer el lector desde el exterior
+        public SqlDataReader Lector
+        {
+            get { return lector; }
+        }
+
+
+        //Creo mi constructor y al momento de que se cree el objeto le paso la conexion
+        public AccesoDatos()
+        {
+            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=POKEDEX_DB; integrated security=true");
+            comando = new SqlCommand();
+        }
+
+        //Creamos la funcion en la cual hacemos la consulta a la BD
+        public void setearConsulta(string consulta)
+        {
+            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandText = consulta;
+        }
+
+        //metodo que realice la lectura y lo guarde en el lector
+        public void ejecutarLectura()
+        {
+            comando.Connection = conexion;
+            try
+            {
+            conexion.Open();
+            lector = comando.ExecuteReader();
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //AGREGO METODO PARA EL INSERT - DE TIPO NON QUERY
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public void cerrarConexion()
+        {
+            //si hay lector tambien lo cierro
+            if(lector != null)
+            {
+                lector.Close();
+            }
+            conexion.Close();
+        }      
+
+    }
+}
