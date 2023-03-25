@@ -96,7 +96,13 @@ namespace negocios
             try
             {
                 //Le seteo la consulta que quiero ejecutar
-                datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo)values("+ nuevo.Numero + ", '"+nuevo.Nombre+"', '"+nuevo.Descripcion+ "',1)");
+                datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo, idTipo, idDebilidad)values("+ nuevo.Numero + ", '"+nuevo.Nombre+"', '"+nuevo.Descripcion+ "',1, @idTipo, @idDebilidad)");
+                
+                //el @ es como crear una variable (parametros), se los tengo que agregar al PARAMETRO
+                //Cuando se ejecute va a reemplazar el @ de la consulta por los numeros de ID que recibe
+                datos.setearParametro("@idTipo", nuevo.Tipo.Id);
+                datos.setearParametro("@idDebilidad", nuevo.Debilidad.Id);
+                
                 datos.ejecutarAccion();
             }
             catch (Exception)
