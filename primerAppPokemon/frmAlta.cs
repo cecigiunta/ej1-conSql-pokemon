@@ -36,7 +36,6 @@ namespace primerAppPokemon
         {
             //Creo un nuevo objeto
             Pokemon nuevoPokemon = new Pokemon();
-
             PokemonNegocio negocio = new PokemonNegocio();
 
             try
@@ -45,6 +44,11 @@ namespace primerAppPokemon
                 nuevoPokemon.Numero = int.Parse(textBoxNumero.Text);
                 nuevoPokemon.Nombre = textBoxNombre.Text;
                 nuevoPokemon.Descripcion = textBoxDescrip.Text;
+
+                //AGREGAMOS DESPLEGABLES
+                nuevoPokemon.Tipo = (Elemento)comboTipo.SelectedItem; //El combo devuelve un object, entonces hago la conversion a elemento
+                nuevoPokemon.Debilidad = (Elemento)comboDebilidad.SelectedItem;
+
 
                 //Mando los datos a la BD
                 //Eso en PokemonNegocio, en el metodo AGREGAR
@@ -55,9 +59,29 @@ namespace primerAppPokemon
             }
             catch (Exception ex)
             {
+               MessageBox.Show(ex.ToString());
+            }
+        }
 
+        private void frmAlta_Load(object sender, EventArgs e)
+        {
+            //Voy a cargar aca los combos con la info4
+            ElementoNegocio elementoNegocio = new ElementoNegocio();
+            try
+            {
+                //estoy yendo dos veces a la BD
+                comboTipo.DataSource = elementoNegocio.listar();
+                comboDebilidad.DataSource = elementoNegocio.listar();
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void comboDebilidad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
