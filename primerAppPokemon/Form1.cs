@@ -20,18 +20,7 @@ namespace primerAppPokemon
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-            PokemonNegocio negocio = new PokemonNegocio();    //Invocar la lectura de la BD
-            listaPokemons = negocio.listar();    //Cuando arranque la app ya lo guardo en la variable
-
-            //el DataSource recibe datos y los moldea en la lista
-            dgvPokemons.DataSource = listaPokemons;  //a la grilla, le voy a asignar la lista que devuelve el método
-
-            dgvPokemons.Columns["UrlImagen"].Visible = false;  //no quiero que me muestre la url de la imagen
-           
-            cargarImagen(listaPokemons[0].UrlImagen);  //Le cargo al picture box la primere foto
-
-
+            cargarForm();
         }
 
 
@@ -61,13 +50,41 @@ namespace primerAppPokemon
             }
         }
 
+        private void cargarForm()
+        {
+            PokemonNegocio negocio = new PokemonNegocio();    //Invocar la lectura de la BD
+
+             try
+            {
+                listaPokemons = negocio.listar();    //Cuando arranque la app ya lo guardo en la variable
+
+                //el DataSource recibe datos y los moldea en la lista
+                dgvPokemons.DataSource = listaPokemons;  //a la grilla, le voy a asignar la lista que devuelve el método
+
+                dgvPokemons.Columns["UrlImagen"].Visible = false;  //no quiero que me muestre la url de la imagen
+
+                cargarImagen(listaPokemons[0].UrlImagen);  //Le cargo al picture box la primere foto
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+
+
+        }
 
         //AGREGAR UN POKEMON
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            //Llamo al otro formulario cuando se clickee el boton
-            frmAlta alta = new frmAlta();
+
+            frmAlta alta = new frmAlta();  //Llamo al otro formulario cuando se clickee el boton
             alta.ShowDialog();
+
+            //Para que luego de agregar se actualice automáticamente
+            cargarForm();
+
         }
     }
 }

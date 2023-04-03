@@ -60,8 +60,15 @@ namespace negocios
                     aux.Numero = lector.GetInt32(0);  //Tengo que conocer qué tipo de dato es (int)
                     aux.Nombre = (string)lector["Nombre"];   //Le pongo el nombre de la columna. Es mas practico
                     aux.Descripcion = (string)lector["Descripcion"];
+
+
+                    //Validar los NULL en la URL IMAGEN - lo hago con el DB NULL. Si NO es nulo, lo leo. 
+                    // FORMA 1 (el Get Ordinal toma la columna): if(!(lector.IsDBNull(lector.GetOrdinal("UrlImagen"))))
+                    if (!(lector["UrlImagen"] is DBNull))  //forma 2. mas resumido
                     aux.UrlImagen = (string)lector["UrlImagen"];
 
+
+                    
                     //CARGAR TIPO Y DEBILIDAD
                     aux.Tipo = new Elemento(); //para que no de referencia nula, porque viene sin instancia la 1 vez
                     aux.Tipo.Descripcion = (string)lector["Tipo"];
@@ -96,12 +103,14 @@ namespace negocios
             try
             {
                 //Le seteo la consulta que quiero ejecutar
-                datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo, idTipo, idDebilidad)values("+ nuevo.Numero + ", '"+nuevo.Nombre+"', '"+nuevo.Descripcion+ "',1, @idTipo, @idDebilidad)");
+                //LE AGREGO LA URL IMAGEN NUEVA A LA CONSULTA
+                datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo, idTipo, idDebilidad, UrlImagen)values("+ nuevo.Numero + ", '"+nuevo.Nombre+"', '"+nuevo.Descripcion+ "',1, @idTipo, @idDebilidad, @urlImagen)");
                 
                 //el @ es como crear una variable (parametros), se los tengo que agregar al PARAMETRO
-                //Cuando se ejecute va a reemplazar el @ de la consulta por los numeros de ID que recibe
+                //Cuando se ejecute va a reemplazar el @ de la consulta por los numeros de ID que recibe4
                 datos.setearParametro("@idTipo", nuevo.Tipo.Id);
                 datos.setearParametro("@idDebilidad", nuevo.Debilidad.Id);
+                datos.setearParametro("@urlImagen", nuevo.UrlImagen);   //la imagen que se da de Alta
                 
                 datos.ejecutarAccion();
             }

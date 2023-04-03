@@ -70,10 +70,10 @@ namespace negocios
         }
 
         //METODO PARA VALIDAR LOS PARAMETROS DE ID TIPO Y ID DEBILIDAD. Le aviso al comando q los agregue
-        public void setearParametro()
+        public void setearParametro(string nombre, object valor)
         {
-            //El metodo AddWithValue permite agregar un parámetro con nombre y valor
-            comando.Parameters.AddWithValue("@idTipo", 3);
+            //El metodo AddWithValue permite agregar un parámetro con nombre y valor: recibe un string y un object
+            comando.Parameters.AddWithValue(nombre, valor);
         }
 
 

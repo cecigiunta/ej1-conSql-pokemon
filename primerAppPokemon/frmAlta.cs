@@ -45,6 +45,10 @@ namespace primerAppPokemon
                 nuevoPokemon.Nombre = textBoxNombre.Text;
                 nuevoPokemon.Descripcion = textBoxDescrip.Text;
 
+                //AGREGO PARA DAR DE ALTA LA IMAGEN
+                //Tambien al metodo agregar le tengo que agregar esta imagen
+                nuevoPokemon.UrlImagen = textBoxImg.Text;
+
                 //AGREGAMOS DESPLEGABLES
                 nuevoPokemon.Tipo = (Elemento)comboTipo.SelectedItem; //El combo devuelve un object, entonces hago la conversion a elemento
                 nuevoPokemon.Debilidad = (Elemento)comboDebilidad.SelectedItem;
@@ -78,10 +82,28 @@ namespace primerAppPokemon
                 MessageBox.Show(ex.ToString());
             }
         }
+  
 
-        private void comboDebilidad_SelectedIndexChanged(object sender, EventArgs e)
+        //AGREGAR IMAGEN ALTA: pokemon.com/el/pokedex  de aca saco las fotos
+        private void textBoxImg_Leave(object sender, EventArgs e)
         {
+            //ME AGREGO EL METODO ACA Y LE PASO COMO PARAMETRO LA IMAGEN URL
+            cargarImagen(textBoxImg.Text);
+        }  //evento Leave del TextBox Imagen
 
+        private void cargarImagen(string imagen)
+        {
+            try
+            {
+                pictureBoxPokemon.Load(imagen);
+
+            }
+            catch (Exception ex)
+            {
+                //Cargamos una imagen por defecto
+                pictureBoxPokemon.Load("https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png");
+
+            }
         }
     }
 }
