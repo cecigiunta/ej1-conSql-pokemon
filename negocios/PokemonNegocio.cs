@@ -44,7 +44,7 @@ namespace negocios
                 //3. Tipo texto : le inyectamos una sentencia sql -- usamos esa
                 // Es recomendable hacerla PRIMERO en el sql
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad";
+                comando.CommandText = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad";
 
                 comando.Connection = conexion;  //le digo al comando que esa sentencia la ejecute en la conexion que defini
 
@@ -57,6 +57,7 @@ namespace negocios
                 {
                     //Si da true, apunta al PRIMER registro
                     Pokemon aux = new Pokemon(); //me creo un auxiliar
+                    aux.Id = (int)lector["Id"];
                     aux.Numero = lector.GetInt32(0);  //Tengo que conocer qué tipo de dato es (int)
                     aux.Nombre = (string)lector["Nombre"];   //Le pongo el nombre de la columna. Es mas practico
                     aux.Descripcion = (string)lector["Descripcion"];
@@ -71,9 +72,11 @@ namespace negocios
                     
                     //CARGAR TIPO Y DEBILIDAD
                     aux.Tipo = new Elemento(); //para que no de referencia nula, porque viene sin instancia la 1 vez
+                    aux.Tipo.Id = (int)lector["IdTipo"];
                     aux.Tipo.Descripcion = (string)lector["Tipo"];
 
                     aux.Debilidad = new Elemento();
+                    aux.Debilidad.Id = (int)lector["IdDebilidad"];
                     aux.Debilidad.Descripcion = (string)lector["Debilidad"];
 
                     lista.Add(aux);        //En cada vuelta va a ir creando una nueva instancia y guardando en la lista
@@ -106,8 +109,7 @@ namespace negocios
                 //LE AGREGO LA URL IMAGEN NUEVA A LA CONSULTA
                 datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo, idTipo, idDebilidad, UrlImagen)values("+ nuevo.Numero + ", '"+nuevo.Nombre+"', '"+nuevo.Descripcion+ "',1, @idTipo, @idDebilidad, @urlImagen)");
                 
-                //el @ es como crear una variable (parametros), se los tengo que agregar al PARAMETRO
-                //Cuando se ejecute va a reemplazar el @ de la consulta por los numeros de ID que recibe4
+                //el @ es como crear una variable (parametros), se los tengo que agregar al PARAMETRO. Cuando se ejecute va a reemplazar el @ de la consulta por los numeros de ID que recibe4
                 datos.setearParametro("@idTipo", nuevo.Tipo.Id);
                 datos.setearParametro("@idDebilidad", nuevo.Debilidad.Id);
                 datos.setearParametro("@urlImagen", nuevo.UrlImagen);   //la imagen que se da de Alta
@@ -116,13 +118,39 @@ namespace negocios
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
             {
                 datos.cerrarConexion();
             }
+        }
+
+
+        //METODO MODIFICAR
+        public void modificar(Pokemon pokeMod)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                //como ya nace seteado, lo que yo tengo que hacer es setear la consulta con los parámetros
+                datos.setearConsulta("update POKEMONS set Numero = @numero, Nombre = @nombre, Descripcion = @descripcion, UrlImagen = @img, IdTipo = @idTipo, IdDebilidad = @idDebilidad Where Id = @id");
+                datos.setearParametro("@numero", pokeMod.Numero);
+                datos.setearParametro("@nombre", pokeMod.Nombre);
+                datos.setearParametro("@descripcion", pokeMod.Descripcion);
+                datos.setearParametro("@img", pokeMod.UrlImagen);
+                datos.setearParametro("@idTipo", pokeMod.Tipo);
+                datos.setearParametro("@idDebilidad", pokeMod.Debilidad);
+                datos.setearParametro("@id", pokeMod.Id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally { datos.cerrarConexion(); }
         }
 
         

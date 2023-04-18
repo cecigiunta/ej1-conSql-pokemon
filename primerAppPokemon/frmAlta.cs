@@ -16,9 +16,22 @@ namespace primerAppPokemon
 {
     public partial class frmAlta : Form
     {
-        public frmAlta()
+        private Pokemon pokemon = null;  //NUEVO - MODIFICAR POKE
+
+
+
+        public frmAlta()  //Constructor de la clase
         {
             InitializeComponent();
+        }
+
+
+        //NUEVO - MODIFICAR POKEMON
+        public frmAlta(Pokemon pokemon)  //Constructor de la clase duplicado para que reciba parametro
+        {
+            InitializeComponent();
+            this.pokemon = pokemon;
+            Text = "Modificar Pokemon";   //Para que cambie el texto que aparece arriba del Form y diga modificar en vez de "nuevo"
         }
 
         private void labelNumero_Click(object sender, EventArgs e)
@@ -35,29 +48,42 @@ namespace primerAppPokemon
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             //Creo un nuevo objeto
-            Pokemon nuevoPokemon = new Pokemon();
+            //MODIFICAR - YA NO NECESITO ESTO:  Pokemon nuevoPokemon = new Pokemon();
             PokemonNegocio negocio = new PokemonNegocio();
 
             try
             {
                 //Cargo los datos en mi nuevo objeto
-                nuevoPokemon.Numero = int.Parse(textBoxNumero.Text);
-                nuevoPokemon.Nombre = textBoxNombre.Text;
-                nuevoPokemon.Descripcion = textBoxDescrip.Text;
+                if(pokemon == null)  //Si el pokemon está nulo, significa que se quiere agregar uno nuevo
+                    pokemon = new Pokemon();
+
+                pokemon.Numero = int.Parse(textBoxNumero.Text);
+                pokemon.Nombre = textBoxNombre.Text;
+                pokemon.Descripcion = textBoxDescrip.Text;
 
                 //AGREGO PARA DAR DE ALTA LA IMAGEN
                 //Tambien al metodo agregar le tengo que agregar esta imagen
-                nuevoPokemon.UrlImagen = textBoxImg.Text;
+                pokemon.UrlImagen = textBoxImg.Text;
 
                 //AGREGAMOS DESPLEGABLES
-                nuevoPokemon.Tipo = (Elemento)comboTipo.SelectedItem; //El combo devuelve un object, entonces hago la conversion a elemento
-                nuevoPokemon.Debilidad = (Elemento)comboDebilidad.SelectedItem;
+                pokemon.Tipo = (Elemento)comboTipo.SelectedItem; //El combo devuelve un object, entonces hago la conversion a elemento
+                pokemon.Debilidad = (Elemento)comboDebilidad.SelectedItem;
 
 
-                //Mando los datos a la BD
-                //Eso en PokemonNegocio, en el metodo AGREGAR
-                negocio.agregar(nuevoPokemon);
-                MessageBox.Show("Agregado exitosamente!");
+                if(pokemon.Id != 0)
+                {
+                    //MODIFICAR POKEMON
+                    negocio.modificar(pokemon);
+                    MessageBox.Show("Modificado exitosamente!");
+
+                }
+                else
+                {
+                    //Mando los datos a la BD
+                    //Eso en PokemonNegocio, en el metodo AGREGAR
+                    negocio.agregar(pokemon);
+                    MessageBox.Show("Agregado exitosamente!");
+                }
                 Close();
 
             }
@@ -75,7 +101,39 @@ namespace primerAppPokemon
             {
                 //estoy yendo dos veces a la BD
                 comboTipo.DataSource = elementoNegocio.listar();
+
+                //NUEVO POKEMON MODIFICAR
+                //les agrego una clave - valor
+                comboTipo.ValueMember = "Id";
+                comboTipo.DisplayMember = "Descripcion";
+                // -- FIN NUEVO
+
+
                 comboDebilidad.DataSource = elementoNegocio.listar();
+
+                //NUEVO POKEMON MODIFICAR
+                comboDebilidad.ValueMember = "Id";
+                comboDebilidad.DisplayMember = "Descripcion";
+                // FIN
+
+
+
+                //NUEVO - POKEMON MODIFICAR   
+                //para que precargue los datos
+                if (pokemon != null)
+                {
+                    textBoxNumero.Text = pokemon.Numero.ToString();
+                    textBoxNombre.Text = pokemon.Nombre;
+                    textBoxDescrip.Text = pokemon.Descripcion;
+                    textBoxImg.Text = pokemon.UrlImagen;
+                    cargarImagen(pokemon.UrlImagen);
+
+                    comboTipo.SelectedValue = pokemon.Tipo.Id;
+                    comboDebilidad.SelectedValue = pokemon.Debilidad.Id;
+
+                }
+
+
             }
             catch (Exception ex)
             {

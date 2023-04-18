@@ -62,6 +62,7 @@ namespace primerAppPokemon
                 dgvPokemons.DataSource = listaPokemons;  //a la grilla, le voy a asignar la lista que devuelve el método
 
                 dgvPokemons.Columns["UrlImagen"].Visible = false;  //no quiero que me muestre la url de la imagen
+                dgvPokemons.Columns["Id"].Visible = false;
 
                 cargarImagen(listaPokemons[0].UrlImagen);  //Le cargo al picture box la primere foto
 
@@ -78,13 +79,24 @@ namespace primerAppPokemon
         //AGREGAR UN POKEMON
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-
             frmAlta alta = new frmAlta();  //Llamo al otro formulario cuando se clickee el boton
             alta.ShowDialog();
+            cargarForm();   //Para que luego de agregar se actualice automáticamente
+        }
 
-            //Para que luego de agregar se actualice automáticamente
+
+
+        //MODIFICAR UN POKEMON
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            //Le tengo que pasar como parámetro el objeto pokemon al que yo quiero modificar
+            Pokemon pokemonSeleccionado;
+            pokemonSeleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;  //Así obtengo el pokemon seleccionado
+
+            //Tengo que ir a la clase frm Alta y DUPLICAR su constructor para que pueda obtener como parámetro al poke seleccionado
+            frmAlta modificar = new frmAlta(pokemonSeleccionado); 
+            modificar.ShowDialog();
             cargarForm();
-
         }
     }
 }

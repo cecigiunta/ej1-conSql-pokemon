@@ -9,6 +9,11 @@ namespace dominio
 {
     public class Pokemon
     {
+
+        //MODIFICAR : NUEVO - Agregamos la property id
+        public int Id { get; set; }
+
+
         [DisplayName("Número")]   //ANNOTATION: Para que funcione, va ARRIBA del atributo que quiero modificar
         public int Numero { get; set; }
         public string Nombre { get; set; }
