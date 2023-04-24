@@ -116,9 +116,9 @@ namespace negocios
                 
                 datos.ejecutarAccion();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
@@ -139,8 +139,8 @@ namespace negocios
                 datos.setearParametro("@nombre", pokeMod.Nombre);
                 datos.setearParametro("@descripcion", pokeMod.Descripcion);
                 datos.setearParametro("@img", pokeMod.UrlImagen);
-                datos.setearParametro("@idTipo", pokeMod.Tipo);
-                datos.setearParametro("@idDebilidad", pokeMod.Debilidad);
+                datos.setearParametro("@idTipo", pokeMod.Tipo.Id);
+                datos.setearParametro("@idDebilidad", pokeMod.Debilidad.Id);
                 datos.setearParametro("@id", pokeMod.Id);
 
                 datos.ejecutarAccion();

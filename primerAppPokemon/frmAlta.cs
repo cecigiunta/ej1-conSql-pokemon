@@ -17,9 +17,6 @@ namespace primerAppPokemon
     public partial class frmAlta : Form
     {
         private Pokemon pokemon = null;  //NUEVO - MODIFICAR POKE
-
-
-
         public frmAlta()  //Constructor de la clase
         {
             InitializeComponent();
@@ -33,12 +30,6 @@ namespace primerAppPokemon
             this.pokemon = pokemon;
             Text = "Modificar Pokemon";   //Para que cambie el texto que aparece arriba del Form y diga modificar en vez de "nuevo"
         }
-
-        private void labelNumero_Click(object sender, EventArgs e)
-        {
-
-        }
-
         
         private void btnCancelar_Click(object sender, EventArgs e)
         {

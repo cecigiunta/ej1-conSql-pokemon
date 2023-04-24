@@ -54,7 +54,6 @@
             this.labelNumero.Size = new System.Drawing.Size(63, 20);
             this.labelNumero.TabIndex = 0;
             this.labelNumero.Text = "Numero";
-            this.labelNumero.Click += new System.EventHandler(this.labelNumero_Click);
             // 
             // labelNombre
             // 
@@ -224,5 +223,6 @@
         private Label labelImg;
         private TextBox textBoxImg;
         private PictureBox pictureBoxPokemon;
+        private EventHandler labelNumero_Click;
     }
 }
