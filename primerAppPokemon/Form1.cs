@@ -98,5 +98,35 @@ namespace primerAppPokemon
             modificar.ShowDialog();
             cargarForm();
         }
+
+
+        //ELIMINAR POKEMON (FISICO) -> Se elimina de la BD
+        private void btnEliminarFisico_Click(object sender, EventArgs e)
+        {
+            PokemonNegocio negocio = new PokemonNegocio();
+            Pokemon seleccionado;
+            try
+            {
+                //validacion para ver si realmente quiere eliminar:
+                DialogResult respuesta = MessageBox.Show("Realmente querés eliminarlo?", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                //El metodo devuelve un Dialog Result, en ese me guardo la respuesta del metodo show
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
+                    negocio.eliminar(seleccionado.Id);
+
+                    //para que se actualice la grilla una vez eliminado:
+                    cargarForm();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
