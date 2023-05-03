@@ -36,6 +36,7 @@ namespace primerAppPokemon
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminarFisico = new System.Windows.Forms.Button();
+            this.btnEliminarLogica = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPokemons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPokemon)).BeginInit();
             this.SuspendLayout();
@@ -94,11 +95,22 @@ namespace primerAppPokemon
             this.btnEliminarFisico.UseVisualStyleBackColor = true;
             this.btnEliminarFisico.Click += new System.EventHandler(this.btnEliminarFisico_Click);
             // 
+            // btnEliminarLogica
+            // 
+            this.btnEliminarLogica.Location = new System.Drawing.Point(383, 387);
+            this.btnEliminarLogica.Name = "btnEliminarLogica";
+            this.btnEliminarLogica.Size = new System.Drawing.Size(117, 50);
+            this.btnEliminarLogica.TabIndex = 5;
+            this.btnEliminarLogica.Text = "Eliminar Logica";
+            this.btnEliminarLogica.UseVisualStyleBackColor = true;
+            this.btnEliminarLogica.Click += new System.EventHandler(this.btnEliminarLogica_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1132, 449);
+            this.Controls.Add(this.btnEliminarLogica);
             this.Controls.Add(this.btnEliminarFisico);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAgregar);
@@ -120,5 +132,6 @@ namespace primerAppPokemon
         private Button btnAgregar;
         private Button btnModificar;
         private Button btnEliminarFisico;
+        private Button btnEliminarLogica;
     }
 }

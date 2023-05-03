@@ -85,7 +85,6 @@ namespace primerAppPokemon
         }
 
 
-
         //MODIFICAR UN POKEMON
         private void btnModificar_Click(object sender, EventArgs e)
         {
@@ -103,6 +102,24 @@ namespace primerAppPokemon
         //ELIMINAR POKEMON (FISICO) -> Se elimina de la BD
         private void btnEliminarFisico_Click(object sender, EventArgs e)
         {
+            eliminar();
+        }
+
+
+        //ELIMINAR POKEMON -> LOGICO 
+        private void btnEliminarLogica_Click(object sender, EventArgs e)
+        {
+            eliminar(true); //acá le digo que SI es logico
+
+            //y a la consulta del metodo listar le agrego que P.activo = 1 asi filtra solo los activos y carga eso
+
+        }
+
+
+
+        //Metodo eliminar GENERAL, dependiendo si es fisico o logico lo llamo de arriba
+        private void eliminar(bool logico = false) //si se lo mando así, el valor es opcional y por defecto es FALSE
+        {
             PokemonNegocio negocio = new PokemonNegocio();
             Pokemon seleccionado;
             try
@@ -114,7 +131,17 @@ namespace primerAppPokemon
                 if (respuesta == DialogResult.Yes)
                 {
                     seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
-                    negocio.eliminar(seleccionado.Id);
+
+                    //llamo a uno o a otro dependiendo del valor del bool
+                    if (logico)
+                    {
+                        negocio.eliminarLogico(seleccionado.Id);
+                    }
+                    else
+                    {
+                        negocio.eliminar(seleccionado.Id);
+                    }
+
 
                     //para que se actualice la grilla una vez eliminado:
                     cargarForm();
@@ -127,6 +154,9 @@ namespace primerAppPokemon
 
                 MessageBox.Show(ex.ToString());
             }
+
         }
     }
+
+    
 }

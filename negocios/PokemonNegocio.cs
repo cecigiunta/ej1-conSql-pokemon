@@ -44,7 +44,7 @@ namespace negocios
                 //3. Tipo texto : le inyectamos una sentencia sql -- usamos esa
                 // Es recomendable hacerla PRIMERO en el sql
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad";
+                comando.CommandText = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad And P.Activo = 1";
 
                 comando.Connection = conexion;  //le digo al comando que esa sentencia la ejecute en la conexion que defini
 
@@ -66,10 +66,10 @@ namespace negocios
                     //Validar los NULL en la URL IMAGEN - lo hago con el DB NULL. Si NO es nulo, lo leo. 
                     // FORMA 1 (el Get Ordinal toma la columna): if(!(lector.IsDBNull(lector.GetOrdinal("UrlImagen"))))
                     if (!(lector["UrlImagen"] is DBNull))  //forma 2. mas resumido
-                    aux.UrlImagen = (string)lector["UrlImagen"];
+                        aux.UrlImagen = (string)lector["UrlImagen"];
 
 
-                    
+
                     //CARGAR TIPO Y DEBILIDAD
                     aux.Tipo = new Elemento(); //para que no de referencia nula, porque viene sin instancia la 1 vez
                     aux.Tipo.Id = (int)lector["IdTipo"];
@@ -83,11 +83,11 @@ namespace negocios
                 }
 
                 conexion.Close();          //Cierro la conexion
-                
+
                 return lista;              //hacemos que la devuelva. Cuando no haya más, deja de leer y la devuelve
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -107,13 +107,13 @@ namespace negocios
             {
                 //Le seteo la consulta que quiero ejecutar
                 //LE AGREGO LA URL IMAGEN NUEVA A LA CONSULTA
-                datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo, idTipo, idDebilidad, UrlImagen)values("+ nuevo.Numero + ", '"+nuevo.Nombre+"', '"+nuevo.Descripcion+ "',1, @idTipo, @idDebilidad, @urlImagen)");
-                
+                datos.setearConsulta("Insert into POKEMONS (Numero, Nombre, Descripcion, Activo, idTipo, idDebilidad, UrlImagen)values(" + nuevo.Numero + ", '" + nuevo.Nombre + "', '" + nuevo.Descripcion + "',1, @idTipo, @idDebilidad, @urlImagen)");
+
                 //el @ es como crear una variable (parametros), se los tengo que agregar al PARAMETRO. Cuando se ejecute va a reemplazar el @ de la consulta por los numeros de ID que recibe4
                 datos.setearParametro("@idTipo", nuevo.Tipo.Id);
                 datos.setearParametro("@idDebilidad", nuevo.Debilidad.Id);
                 datos.setearParametro("@urlImagen", nuevo.UrlImagen);   //la imagen que se da de Alta
-                
+
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -154,7 +154,7 @@ namespace negocios
         }
 
 
-        //METODO ELIMINAR
+        //METODO ELIMINAR FISICA
         public void eliminar(int id)
         {
             try
@@ -171,6 +171,24 @@ namespace negocios
             }
         }
 
-        
+
+        //Metodo ELIMINACION LOGICA: Le cambio el estado de la columna Activo a 0 asi se "deshabilita" pero sigue existiendo en bd
+        public void eliminarLogico(int id)
+        {
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+                datos.setearConsulta("update POKEMONS set Activo = 0 Where Id = @id");
+                datos.setearParametro("@id", id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }
