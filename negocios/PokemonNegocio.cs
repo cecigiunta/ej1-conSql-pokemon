@@ -177,7 +177,7 @@ namespace negocios
         {
             try
             {
-                AccesoDatos datos = new AccesoDatos();
+                AccesoDatos datos = new AccesoDatos();   
                 datos.setearConsulta("update POKEMONS set Activo = 0 Where Id = @id");
                 datos.setearParametro("@id", id);
 

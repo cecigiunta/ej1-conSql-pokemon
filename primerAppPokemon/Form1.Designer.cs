@@ -37,6 +37,9 @@ namespace primerAppPokemon
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminarFisico = new System.Windows.Forms.Button();
             this.btnEliminarLogica = new System.Windows.Forms.Button();
+            this.labelFiltro = new System.Windows.Forms.Label();
+            this.textBoxFiltro = new System.Windows.Forms.TextBox();
+            this.btnFiltro = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPokemons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPokemon)).BeginInit();
             this.SuspendLayout();
@@ -45,22 +48,22 @@ namespace primerAppPokemon
             // 
             this.dgvPokemons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPokemons.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvPokemons.Location = new System.Drawing.Point(12, 12);
+            this.dgvPokemons.Location = new System.Drawing.Point(12, 45);
             this.dgvPokemons.MultiSelect = false;
             this.dgvPokemons.Name = "dgvPokemons";
             this.dgvPokemons.RowHeadersWidth = 49;
             this.dgvPokemons.RowTemplate.Height = 28;
             this.dgvPokemons.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPokemons.Size = new System.Drawing.Size(729, 369);
+            this.dgvPokemons.Size = new System.Drawing.Size(729, 336);
             this.dgvPokemons.TabIndex = 0;
             this.dgvPokemons.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPokemons_CellContentClick);
             this.dgvPokemons.SelectionChanged += new System.EventHandler(this.dgvPokemons_SelectionChanged);
             // 
             // pictureBoxPokemon
             // 
-            this.pictureBoxPokemon.Location = new System.Drawing.Point(768, 12);
+            this.pictureBoxPokemon.Location = new System.Drawing.Point(768, 45);
             this.pictureBoxPokemon.Name = "pictureBoxPokemon";
-            this.pictureBoxPokemon.Size = new System.Drawing.Size(352, 369);
+            this.pictureBoxPokemon.Size = new System.Drawing.Size(352, 336);
             this.pictureBoxPokemon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxPokemon.TabIndex = 1;
             this.pictureBoxPokemon.TabStop = false;
@@ -105,11 +108,40 @@ namespace primerAppPokemon
             this.btnEliminarLogica.UseVisualStyleBackColor = true;
             this.btnEliminarLogica.Click += new System.EventHandler(this.btnEliminarLogica_Click);
             // 
+            // labelFiltro
+            // 
+            this.labelFiltro.AutoSize = true;
+            this.labelFiltro.Location = new System.Drawing.Point(17, 15);
+            this.labelFiltro.Name = "labelFiltro";
+            this.labelFiltro.Size = new System.Drawing.Size(43, 20);
+            this.labelFiltro.TabIndex = 6;
+            this.labelFiltro.Text = "Filtro";
+            // 
+            // textBoxFiltro
+            // 
+            this.textBoxFiltro.Location = new System.Drawing.Point(73, 12);
+            this.textBoxFiltro.Name = "textBoxFiltro";
+            this.textBoxFiltro.Size = new System.Drawing.Size(225, 26);
+            this.textBoxFiltro.TabIndex = 7;
+            // 
+            // btnFiltro
+            // 
+            this.btnFiltro.Location = new System.Drawing.Point(304, 12);
+            this.btnFiltro.Name = "btnFiltro";
+            this.btnFiltro.Size = new System.Drawing.Size(90, 28);
+            this.btnFiltro.TabIndex = 8;
+            this.btnFiltro.Text = "Filtrar";
+            this.btnFiltro.UseVisualStyleBackColor = true;
+            this.btnFiltro.Click += new System.EventHandler(this.btnFiltro_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1132, 449);
+            this.Controls.Add(this.btnFiltro);
+            this.Controls.Add(this.textBoxFiltro);
+            this.Controls.Add(this.labelFiltro);
             this.Controls.Add(this.btnEliminarLogica);
             this.Controls.Add(this.btnEliminarFisico);
             this.Controls.Add(this.btnModificar);
@@ -122,6 +154,7 @@ namespace primerAppPokemon
             ((System.ComponentModel.ISupportInitialize)(this.dgvPokemons)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPokemon)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -133,5 +166,8 @@ namespace primerAppPokemon
         private Button btnModificar;
         private Button btnEliminarFisico;
         private Button btnEliminarLogica;
+        private Label labelFiltro;
+        private TextBox textBoxFiltro;
+        private Button btnFiltro;
     }
 }
