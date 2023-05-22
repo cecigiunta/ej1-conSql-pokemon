@@ -156,23 +156,24 @@ namespace primerAppPokemon
         }
 
 
-        //BOTON DE FILTRADO
-        private void btnFiltro_Click(object sender, EventArgs e)
+        //FILTRADO RAPIDO - Cambio boton a evento Text Changed del Text Box
+         private void textBoxFiltro_TextChanged(object sender, EventArgs e)
         {
             List<Pokemon> listaFiltrada;   //Creo una nueva lista. Esta lista es la que creo arriba como privada
             string filtro = textBoxFiltro.Text;
 
-            if(filtro != "")  //Si hay algo en el filtro..
+            if (filtro != "")  //Si hay algo en el filtro..
             {
-                listaFiltrada = listaPokemons.FindAll(x => 
-                x.Nombre.ToLower().Contains(textBoxFiltro.Text.ToLower()) || 
+                listaFiltrada = listaPokemons.FindAll(x =>
+                x.Nombre.ToLower().Contains(textBoxFiltro.Text.ToLower()) ||
                 x.Tipo.Descripcion.ToLower().Contains(textBoxFiltro.Text.ToLower()) ||
                 x.Debilidad.Descripcion.ToLower().Contains(textBoxFiltro.Text.ToLower())
                 );
                 //El findAll (metodo de los tipo collection) requiere como parámetro una expresióm lamda, es una especie de ForEach:
                 //En cada vuelta, el nombre si es igual al filtro, lo devuelve y lo  muestra
                 //El Contains para que no tengas que escribir toda la palabra para que filtre
-            } else
+            }
+            else
             {
                 listaFiltrada = listaPokemons;    //si no hay nada en el filtro, devuelve la lista original
             }
