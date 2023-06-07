@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -16,7 +17,10 @@ namespace primerAppPokemon
 {
     public partial class frmAlta : Form
     {
-        private Pokemon pokemon = null;  //NUEVO - MODIFICAR POKE
+        private Pokemon pokemon = null;  //MODIFICAR POKE
+        private OpenFileDialog archivo = null;
+
+
         public frmAlta()  //Constructor de la clase
         {
             InitializeComponent();
@@ -74,6 +78,12 @@ namespace primerAppPokemon
                     //Eso en PokemonNegocio, en el metodo AGREGAR
                     negocio.agregar(pokemon);
                     MessageBox.Show("Agregado exitosamente!");
+                }
+
+                //NUEVO : CARGAR IMAGEN LOCALMENTE
+                if(archivo != null && !textBoxImg.Text.ToUpper().Contains("HTTP"))
+                {
+                    File.Copy(archivo.FileName, ConfigurationManager.AppSettings["images-folder"] + archivo.FileName);
                 }
                 Close();
 
@@ -151,6 +161,37 @@ namespace primerAppPokemon
             {
                 //Cargamos una imagen por defecto
                 pictureBoxPokemon.Load("https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png");
+
+            }
+        }
+
+        private void btnAgregarImg_Click(object sender, EventArgs e)
+        {
+            //para poder levantar una img:
+            OpenFileDialog archivo = new OpenFileDialog() ; //creamos un objeto
+
+            //le podemos decir qué archivos permita
+            archivo.Filter = "jpg|*.jpg";
+
+            //cuando abra, si el resultado da OK osea que user le dio "Abrir" a la imagen
+            if(archivo.ShowDialog() == DialogResult.OK)
+            {
+                //en la caja de texto de la img, le voy a guardar la ruta completa
+                textBoxImg.Text = archivo.FileName;
+
+                //para verlo ahi en la app, vuelvo a mi metodo cargarImagen
+                cargarImagen(archivo.FileName);
+
+                //guardar la imagen cuando guarde el pokemon
+
+
+
+
+                //guardo la imagen, lo usamos haciendo usodela clase file
+                //El copy recibe un archivo de origen y una ruta de destino
+                //Para la ruta de destino tenemos q crear una carpeta en nuestra PC en el disco C (cree poke-app y la vamos a agregar por archivo de configuracion
+                //Para leerlo, agrego una referencia en el proyecto -> assembles > System.Configuration
+                
 
             }
         }

@@ -43,6 +43,7 @@
             this.labelImg = new System.Windows.Forms.Label();
             this.textBoxImg = new System.Windows.Forms.TextBox();
             this.pictureBoxPokemon = new System.Windows.Forms.PictureBox();
+            this.btnAgregarImg = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPokemon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,7 +150,6 @@
             this.comboDebilidad.Name = "comboDebilidad";
             this.comboDebilidad.Size = new System.Drawing.Size(168, 27);
             this.comboDebilidad.TabIndex = 5;
-           
             // 
             // labelImg
             // 
@@ -170,18 +170,29 @@
             // 
             // pictureBoxPokemon
             // 
-            this.pictureBoxPokemon.Location = new System.Drawing.Point(372, 60);
+            this.pictureBoxPokemon.Location = new System.Drawing.Point(398, 60);
             this.pictureBoxPokemon.Name = "pictureBoxPokemon";
-            this.pictureBoxPokemon.Size = new System.Drawing.Size(334, 259);
+            this.pictureBoxPokemon.Size = new System.Drawing.Size(298, 335);
             this.pictureBoxPokemon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxPokemon.TabIndex = 14;
             this.pictureBoxPokemon.TabStop = false;
+            // 
+            // btnAgregarImg
+            // 
+            this.btnAgregarImg.Location = new System.Drawing.Point(330, 203);
+            this.btnAgregarImg.Name = "btnAgregarImg";
+            this.btnAgregarImg.Size = new System.Drawing.Size(47, 28);
+            this.btnAgregarImg.TabIndex = 15;
+            this.btnAgregarImg.Text = "+";
+            this.btnAgregarImg.UseVisualStyleBackColor = true;
+            this.btnAgregarImg.Click += new System.EventHandler(this.btnAgregarImg_Click);
             // 
             // frmAlta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(753, 420);
+            this.ClientSize = new System.Drawing.Size(713, 420);
+            this.Controls.Add(this.btnAgregarImg);
             this.Controls.Add(this.pictureBoxPokemon);
             this.Controls.Add(this.textBoxImg);
             this.Controls.Add(this.labelImg);
@@ -224,5 +235,6 @@
         private TextBox textBoxImg;
         private PictureBox pictureBoxPokemon;
         private EventHandler labelNumero_Click;
+        private Button btnAgregarImg;
     }
 }

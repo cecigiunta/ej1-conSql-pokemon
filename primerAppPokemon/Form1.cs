@@ -21,6 +21,11 @@ namespace primerAppPokemon
         private void Form1_Load(object sender, EventArgs e)
         {
             cargarForm();
+
+            //AGREGO: FILTRO CONTRA BD
+            comboBoxCampo.Items.Add("Número");
+            comboBoxCampo.Items.Add("Nombre");
+            comboBoxCampo.Items.Add("Descripción");
         }
 
 
@@ -181,6 +186,46 @@ namespace primerAppPokemon
             dgvPokemons.DataSource = null;   //1 paso: limpio la lista
             dgvPokemons.DataSource = listaFiltrada;
             ocultarColumnas();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string opcion = comboBoxCampo.SelectedItem.ToString(); //cuando selecciono el campo
+            if (opcion == "Numero")
+            {
+                comboBoxCriterio.Items.Clear();
+                comboBoxCriterio.Items.Add("Mayor a");
+                comboBoxCriterio.Items.Add("Menor a");
+                comboBoxCriterio.Items.Add("Igual a");
+            }
+            else  //si no es numero, entonces es descripcion o nombre (ambos texto)
+            {
+                comboBoxCriterio.Items.Clear();
+                comboBoxCriterio.Items.Add("Comienza con");
+                comboBoxCriterio.Items.Add("Termina con");
+                comboBoxCriterio.Items.Add("Contiene");
+            }
+        }
+
+        private void btnFiltro_Click(object sender, EventArgs e)
+        {
+            PokemonNegocio negocio = new PokemonNegocio();
+            try
+            {
+                string campo = comboBoxCampo.SelectedItem.ToString();
+                string criterio = comboBoxCriterio.SelectedItem.ToString();
+                string filtro = textBoxFiltroAv.Text;
+                dgvPokemons.DataSource = negocio.filtrarContraBD(campo, criterio, filtro);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 

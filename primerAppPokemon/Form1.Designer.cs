@@ -40,6 +40,12 @@ namespace primerAppPokemon
             this.labelFiltro = new System.Windows.Forms.Label();
             this.textBoxFiltro = new System.Windows.Forms.TextBox();
             this.btnFiltro = new System.Windows.Forms.Button();
+            this.labelCampo = new System.Windows.Forms.Label();
+            this.labelCriterio = new System.Windows.Forms.Label();
+            this.labelFiltroAv = new System.Windows.Forms.Label();
+            this.textBoxFiltroAv = new System.Windows.Forms.TextBox();
+            this.comboBoxCampo = new System.Windows.Forms.ComboBox();
+            this.comboBoxCriterio = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPokemons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPokemon)).BeginInit();
             this.SuspendLayout();
@@ -124,23 +130,82 @@ namespace primerAppPokemon
             this.textBoxFiltro.Size = new System.Drawing.Size(225, 26);
             this.textBoxFiltro.TabIndex = 7;
             this.textBoxFiltro.TextChanged += new System.EventHandler(this.textBoxFiltro_TextChanged);
-            this.textBoxFiltro.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxFiltro_KeyPress);
             // 
             // btnFiltro
             // 
-            this.btnFiltro.Location = new System.Drawing.Point(304, 12);
+            this.btnFiltro.Location = new System.Drawing.Point(306, 477);
             this.btnFiltro.Name = "btnFiltro";
-            this.btnFiltro.Size = new System.Drawing.Size(90, 28);
+            this.btnFiltro.Size = new System.Drawing.Size(140, 45);
             this.btnFiltro.TabIndex = 8;
             this.btnFiltro.Text = "Filtrar";
             this.btnFiltro.UseVisualStyleBackColor = true;
             this.btnFiltro.Click += new System.EventHandler(this.btnFiltro_Click);
             // 
+            // labelCampo
+            // 
+            this.labelCampo.AutoSize = true;
+            this.labelCampo.Location = new System.Drawing.Point(19, 467);
+            this.labelCampo.Name = "labelCampo";
+            this.labelCampo.Size = new System.Drawing.Size(57, 20);
+            this.labelCampo.TabIndex = 9;
+            this.labelCampo.Text = "Campo";
+            // 
+            // labelCriterio
+            // 
+            this.labelCriterio.AutoSize = true;
+            this.labelCriterio.Location = new System.Drawing.Point(19, 502);
+            this.labelCriterio.Name = "labelCriterio";
+            this.labelCriterio.Size = new System.Drawing.Size(58, 20);
+            this.labelCriterio.TabIndex = 10;
+            this.labelCriterio.Text = "Criterio";
+            // 
+            // labelFiltroAv
+            // 
+            this.labelFiltroAv.AutoSize = true;
+            this.labelFiltroAv.Location = new System.Drawing.Point(19, 536);
+            this.labelFiltroAv.Name = "labelFiltroAv";
+            this.labelFiltroAv.Size = new System.Drawing.Size(43, 20);
+            this.labelFiltroAv.TabIndex = 11;
+            this.labelFiltroAv.Text = "Filtro";
+            this.labelFiltroAv.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // textBoxFiltroAv
+            // 
+            this.textBoxFiltroAv.Location = new System.Drawing.Point(131, 533);
+            this.textBoxFiltroAv.Name = "textBoxFiltroAv";
+            this.textBoxFiltroAv.Size = new System.Drawing.Size(146, 26);
+            this.textBoxFiltroAv.TabIndex = 12;
+            // 
+            // comboBoxCampo
+            // 
+            this.comboBoxCampo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCampo.FormattingEnabled = true;
+            this.comboBoxCampo.Location = new System.Drawing.Point(132, 460);
+            this.comboBoxCampo.Name = "comboBoxCampo";
+            this.comboBoxCampo.Size = new System.Drawing.Size(145, 27);
+            this.comboBoxCampo.TabIndex = 13;
+            this.comboBoxCampo.SelectedIndexChanged += new System.EventHandler(this.comboBoxCampo_SelectedIndexChanged);
+            // 
+            // comboBoxCriterio
+            // 
+            this.comboBoxCriterio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCriterio.FormattingEnabled = true;
+            this.comboBoxCriterio.Location = new System.Drawing.Point(131, 495);
+            this.comboBoxCriterio.Name = "comboBoxCriterio";
+            this.comboBoxCriterio.Size = new System.Drawing.Size(145, 27);
+            this.comboBoxCriterio.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 449);
+            this.ClientSize = new System.Drawing.Size(1132, 608);
+            this.Controls.Add(this.comboBoxCriterio);
+            this.Controls.Add(this.comboBoxCampo);
+            this.Controls.Add(this.textBoxFiltroAv);
+            this.Controls.Add(this.labelFiltroAv);
+            this.Controls.Add(this.labelCriterio);
+            this.Controls.Add(this.labelCampo);
             this.Controls.Add(this.btnFiltro);
             this.Controls.Add(this.textBoxFiltro);
             this.Controls.Add(this.labelFiltro);
@@ -171,5 +236,11 @@ namespace primerAppPokemon
         private Label labelFiltro;
         private TextBox textBoxFiltro;
         private Button btnFiltro;
+        private Label labelCampo;
+        private Label labelCriterio;
+        private Label labelFiltroAv;
+        private TextBox textBoxFiltroAv;
+        private ComboBox comboBoxCampo;
+        private ComboBox comboBoxCriterio;
     }
 }

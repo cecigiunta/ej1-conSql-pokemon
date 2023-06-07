@@ -26,10 +26,7 @@ namespace negocios
             //No genero instancia porque voy a obtener como resultado un objeto
             SqlDataReader lector;
 
-
-            //Manejar excepciones es muy importante para la conexion a la BD
             try
-            //Dentro del try, todo lo que puede fallar (la conexion)
             {
                 //lo primero es el servidor, lo segundo es a qué base de datos (database=EL NOMBRE DE LA BD)
                 //lo tercero es como me voy  a autenticar(en este caso es cuando usamos Microsoft Auth
@@ -62,13 +59,8 @@ namespace negocios
                     aux.Nombre = (string)lector["Nombre"];   //Le pongo el nombre de la columna. Es mas practico
                     aux.Descripcion = (string)lector["Descripcion"];
 
-
-                    //Validar los NULL en la URL IMAGEN - lo hago con el DB NULL. Si NO es nulo, lo leo. 
-                    // FORMA 1 (el Get Ordinal toma la columna): if(!(lector.IsDBNull(lector.GetOrdinal("UrlImagen"))))
-                    if (!(lector["UrlImagen"] is DBNull))  //forma 2. mas resumido
+                    if (!(lector["UrlImagen"] is DBNull)) 
                         aux.UrlImagen = (string)lector["UrlImagen"];
-
-
 
                     //CARGAR TIPO Y DEBILIDAD
                     aux.Tipo = new Elemento(); //para que no de referencia nula, porque viene sin instancia la 1 vez
@@ -91,11 +83,7 @@ namespace negocios
             {
                 throw ex;
             }
-
-
-
-
-        }
+       }
 
 
         //METODO PARA INSERTAR
@@ -190,5 +178,97 @@ namespace negocios
         }
 
 
+        //METODO FILTRAR AVANZADO - CONTRA LA BD
+        public List<Pokemon> filtrarContraBD(string campo, string criterio, string filtro)
+        {
+            List<Pokemon> lista = new List<Pokemon>();
+            AccesoDatos datos = new AccesoDatos();
+    
+            try
+            {
+                //la consulta me la traigo del metodo listar
+                string consulta = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad And P.Activo = 1 And ";
+                //despues del ultimo caracter, le agrego el And y un espacio para concatenarle posibles filtros como like o el numerico
+
+                if(campo == "Numero")
+                {
+                    switch (criterio)
+                    {
+                        case "Mayor a":
+                            consulta += "Numero > " + filtro;
+                            break;
+                        case "Menor a":
+                            consulta += "Numero < " + filtro;
+                            break;
+                        default:
+                            consulta += "Numero = " + filtro;
+                            break;
+                    }
+                } 
+                else if(campo == "Nombre") 
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":
+                            consulta += "Nombre like '" + filtro + "%'";
+                            break;
+                        case "Termina con":
+                            consulta += "Nombre like '%" + filtro + "'";
+                            break;
+                        default:  //contiene
+                            consulta += "Nombre like '%" + filtro + "%'";
+                            break;
+                    }
+                }
+                else  //Es Descripción
+                {
+                    switch (criterio)
+                    {
+                        case "Comienza con":  //like 'filtro%'
+                            consulta += "P.Descripcion like '" + filtro +"%'";
+                            break;
+                        case "Termina con":  // like '%filtro'
+                            consulta += "P.Descripcion like '%" + filtro + "'";
+                            break;
+                        default:  //contiene  P.Descripcion like '%filtro%' -> va entre %%
+                            consulta += "P.Descripcion like '%" + filtro + "%'";
+                            break;
+                    }
+                }
+
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+
+                //me traigo todo el codigo desde el while lector read de arriba y a cada lector lo cambio por datos.Lector
+                while (datos.Lector.Read())
+                {
+                    Pokemon aux = new Pokemon();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Numero = datos.Lector.GetInt32(0);  
+                    aux.Nombre = (string)datos.Lector["Nombre"]; 
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+
+                    if (!(datos.Lector["UrlImagen"] is DBNull))
+                        aux.UrlImagen = (string)datos.Lector["UrlImagen"];
+
+                    aux.Tipo = new Elemento();
+                    aux.Tipo.Id = (int)datos.Lector["IdTipo"];
+                    aux.Tipo.Descripcion = (string)datos.Lector["Tipo"];
+
+                    aux.Debilidad = new Elemento();
+                    aux.Debilidad.Id = (int)datos.Lector["IdDebilidad"];
+                    aux.Debilidad.Descripcion = (string)datos.Lector["Debilidad"];
+
+                    lista.Add(aux);     
+                }
+
+                return lista;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
