@@ -196,7 +196,7 @@ namespace primerAppPokemon
         private void comboBoxCampo_SelectedIndexChanged(object sender, EventArgs e)
         {
             string opcion = comboBoxCampo.SelectedItem.ToString(); //cuando selecciono el campo
-            if (opcion == "Numero")
+            if (opcion == "Número")
             {
                 comboBoxCriterio.Items.Clear();
                 comboBoxCriterio.Items.Add("Mayor a");
@@ -212,11 +212,71 @@ namespace primerAppPokemon
             }
         }
 
+
+        //FUNCION para validar si hay algo seleccionado en el filtro avanzado
+        private bool validarFiltro()
+        {
+            //como sé si el cbo está cargado: Si el index del combo es mayor o igual a 0, significa que hay algo seleccionado
+            //Si esta el index en -1, significa que no hay NADA seleccionado
+            if(comboBoxCampo.SelectedIndex == -1)
+            {
+                MessageBox.Show("Por favor, seleccione el campo para filtrar");
+                return true;
+            }
+            if (comboBoxCriterio.SelectedIndex == -1)
+            {
+                MessageBox.Show("Por favor, seleccione el criterio para filtrar");
+                return true;
+            }
+
+            //Si la persona eligio el campo Numeros...
+            if(comboBoxCampo.SelectedItem.ToString() == "Número")
+            {
+                //Pregunto primero si no está vacío
+                if (string.IsNullOrEmpty(textBoxFiltroAv.Text))
+                {
+                    MessageBox.Show("Ingrese algún valor para filtrar");
+                    return true;
+                }
+                //Pregunto si está escribiendo numeros. Si NO está escribiendo numeros
+                if (!soloNumeros(textBoxFiltroAv.Text))
+                {
+                    MessageBox.Show("Solo Numeros por favor");
+                    return true;
+                }
+           
+            }
+
+            return false;
+        }
+
+        //Funcion para validar que si eligen NUMERO como Campo, se ingresen numeros
+        private bool soloNumeros(string cadena)
+        {
+            foreach  ( char caracter in cadena)
+            {
+                if (!(char.IsNumber(caracter)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+
+        //BOTON PARA FILTRAR AVANZADO
         private void btnFiltro_Click(object sender, EventArgs e)
         {
             PokemonNegocio negocio = new PokemonNegocio();
             try
             {
+                //AGREGO ESTO HOY
+                if (validarFiltro())
+                {
+                    return;   //Si da positivo, o sea que SI necesita validar, corta la ejecucion del evento
+                }
+
                 string campo = comboBoxCampo.SelectedItem.ToString();
                 string criterio = comboBoxCriterio.SelectedItem.ToString();
                 string filtro = textBoxFiltroAv.Text;

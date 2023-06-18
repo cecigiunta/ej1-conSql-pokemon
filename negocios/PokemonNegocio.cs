@@ -190,7 +190,7 @@ namespace negocios
                 string consulta = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad And P.Activo = 1 And ";
                 //despues del ultimo caracter, le agrego el And y un espacio para concatenarle posibles filtros como like o el numerico
 
-                if(campo == "Numero")
+                if(campo == "Número")
                 {
                     switch (criterio)
                     {
